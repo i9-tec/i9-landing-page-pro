@@ -99,6 +99,26 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-semibold;
   }
+  
+  /* Fix form input text visibility in both modes */
+  input, textarea, select {
+    @apply bg-white text-gray-800 dark:bg-gray-800 dark:text-white;
+  }
+  
+  /* Fix form placeholders */
+  input::placeholder, textarea::placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  /* Fix form labels */
+  label {
+    @apply text-gray-800 dark:text-gray-100;
+  }
+
+  /* Fix select dropdown visibility */
+  select option {
+    @apply bg-white text-gray-800 dark:bg-gray-700 dark:text-white;
+  }
 }
 
 @layer components {

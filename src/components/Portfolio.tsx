@@ -8,7 +8,6 @@ import {
   DialogTitle 
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -122,8 +121,16 @@ const Portfolio = () => {
   const [selectedItem, setSelectedItem] = useState<typeof portfolioItems[0] | null>(null);
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Update autoplay configuration to make it continuous without pauses
   const autoplayRef = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
+    Autoplay({ 
+      delay: 2000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false, // Don't stop on mouse enter
+      stopOnFocusIn: false, // Don't stop on focus
+      playOnInit: true // Start playing immediately
+    })
   );
 
   const handleOpenModal = (item: typeof portfolioItems[0]) => {
@@ -163,13 +170,14 @@ const Portfolio = () => {
           </p>
         </div>
 
-        <div className="mb-10">
+        <div className="mb-10 overflow-hidden">
           <Carousel
             className="w-full"
             plugins={[autoplayRef.current]}
             opts={{
               align: "start",
               loop: true,
+              dragFree: true // Enable free-dragging for smoother experience
             }}
           >
             <CarouselContent>
