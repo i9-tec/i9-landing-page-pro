@@ -3,8 +3,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Calendar } from '@/components/ui/calendar';
+import { format, addDays, isValid } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { getAvailableTimes, isBusinessDay } from '@/lib/date-utils';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +21,13 @@ const ContactSection = () => {
     email: '',
     phone: '',
     interest: '',
-    message: ''
+    message: '',
+    wantsAppointment: false,
+    appointmentDate: undefined as Date | undefined,
+    appointmentTime: '',
   });
   
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -27,6 +40,36 @@ const ContactSection = () => {
     setFormData(prev => ({ ...prev, interest: value }));
   };
 
+  const handleTimeSelect = (time: string) => {
+    setFormData(prev => ({ ...prev, appointmentTime: time }));
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setFormData(prev => ({ 
+      ...prev, 
+      appointmentDate: date,
+      appointmentTime: '' // Reset time when date changes
+    }));
+    
+    if (date && isValid(date)) {
+      const times = getAvailableTimes(date);
+      setAvailableTimes(times);
+    } else {
+      setAvailableTimes([]);
+    }
+  };
+
+  const handleSchedulingToggle = (checked: boolean) => {
+    setFormData(prev => ({ ...prev, wantsAppointment: checked }));
+    if (!checked) {
+      setFormData(prev => ({ 
+        ...prev, 
+        appointmentDate: undefined, 
+        appointmentTime: '' 
+      }));
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -35,7 +78,9 @@ const ContactSection = () => {
     setTimeout(() => {
       toast({
         title: "Mensagem enviada!",
-        description: "Entraremos em contato em breve.",
+        description: formData.wantsAppointment 
+          ? `Entraremos em contato em breve. Sua consulta foi agendada para ${format(formData.appointmentDate!, 'dd/MM/yyyy')} às ${formData.appointmentTime}.`
+          : "Entraremos em contato em breve.",
       });
       setLoading(false);
       setFormData({
@@ -43,18 +88,21 @@ const ContactSection = () => {
         email: '',
         phone: '',
         interest: '',
-        message: ''
+        message: '',
+        wantsAppointment: false,
+        appointmentDate: undefined,
+        appointmentTime: '',
       });
     }, 1000);
   };
 
   return (
-    <section id="contato" className="py-16 bg-gradient-to-br from-primary-800 to-primary-900 text-white">
+    <section id="contato" className="py-16 bg-gradient-to-br from-primary-800 to-primary-900 text-white dark:from-gray-900 dark:to-black">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-4xl font-bold mb-6 font-heading">Vamos criar sua presença digital?</h2>
-            <p className="mb-8 text-blue-100">
+            <p className="mb-8 text-blue-100 dark:text-gray-300">
               Preencha o formulário ao lado e nossa equipe entrará em contato para entender seu projeto e oferecer a melhor solução para suas necessidades.
             </p>
             
@@ -104,11 +152,11 @@ const ContactSection = () => {
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
-            <h3 className="text-xl font-semibold mb-6 text-primary-800">Solicite um orçamento</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+            <h3 className="text-xl font-semibold mb-6 text-primary-800 dark:text-blue-300">Solicite um orçamento</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Nome completo *
                 </label>
                 <Input
@@ -118,13 +166,13 @@ const ContactSection = () => {
                   onChange={handleChange}
                   required
                   placeholder="Digite seu nome"
-                  className="w-full"
+                  className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     E-mail *
                   </label>
                   <Input
@@ -135,11 +183,11 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="seu@email.com"
-                    className="w-full"
+                    className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Telefone/WhatsApp *
                   </label>
                   <Input
@@ -149,13 +197,13 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="(00) 00000-0000"
-                    className="w-full"
+                    className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
               </div>
               
               <div>
-                <label htmlFor="interest" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="interest" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Área de interesse *
                 </label>
                 <Select 
@@ -163,10 +211,10 @@ const ContactSection = () => {
                   onValueChange={handleSelectChange}
                   required
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     <SelectValue placeholder="Selecione seu segmento" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-800">
                     <SelectItem value="saude">Saúde e Bem-estar</SelectItem>
                     <SelectItem value="juridico">Serviços Jurídicos</SelectItem>
                     <SelectItem value="imobiliario">Mercado Imobiliário</SelectItem>
@@ -180,8 +228,100 @@ const ContactSection = () => {
                 </Select>
               </div>
               
+              <div className="flex items-center space-x-2 pt-2">
+                <Switch 
+                  id="schedule-appointment"
+                  checked={formData.wantsAppointment}
+                  onCheckedChange={handleSchedulingToggle}
+                  className="data-[state=checked]:bg-primary-800"
+                />
+                <Label 
+                  htmlFor="schedule-appointment" 
+                  className="text-sm font-medium cursor-pointer text-gray-700 dark:text-gray-300"
+                >
+                  Desejo agendar uma consulta online gratuita
+                </Label>
+              </div>
+              
+              {formData.wantsAppointment && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-gray-100 dark:border-gray-700">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Data da consulta *
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !formData.appointmentDate && "text-muted-foreground",
+                            "dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                          )}
+                          disabled={!formData.wantsAppointment}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {formData.appointmentDate ? (
+                            format(formData.appointmentDate, "dd/MM/yyyy", { locale: ptBR })
+                          ) : (
+                            <span>Escolha uma data</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 dark:bg-gray-800" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={formData.appointmentDate}
+                          onSelect={handleDateSelect}
+                          disabled={(date) => {
+                            // Disable past dates, weekends, holidays and recess
+                            return !isBusinessDay(date) || date < new Date();
+                          }}
+                          initialFocus
+                          fromDate={new Date()}
+                          toDate={addDays(new Date(), 60)}
+                          className="pointer-events-auto"
+                          locale={ptBR}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Disponível de segunda a sexta, exceto feriados e recesso
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Horário *
+                    </label>
+                    <Select 
+                      value={formData.appointmentTime} 
+                      onValueChange={handleTimeSelect}
+                      disabled={!formData.appointmentDate || availableTimes.length === 0}
+                    >
+                      <SelectTrigger className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <SelectValue placeholder="Selecione um horário" />
+                      </SelectTrigger>
+                      <SelectContent className="dark:bg-gray-800">
+                        {availableTimes.map(time => (
+                          <SelectItem key={time} value={time}>{time}</SelectItem>
+                        ))}
+                        {availableTimes.length === 0 && formData.appointmentDate && (
+                          <SelectItem value="" disabled>
+                            Sem horários disponíveis
+                          </SelectItem>
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Horário comercial: 08:00h às 17:00h
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Mensagem
                 </label>
                 <Textarea
@@ -190,15 +330,19 @@ const ContactSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Conte-nos um pouco sobre seu projeto"
-                  className="w-full min-h-[100px]"
+                  className="w-full min-h-[100px] dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
               </div>
               
               <div>
-                <Button type="submit" className="w-full btn-accent py-6" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full btn-accent py-6" 
+                  disabled={loading || (formData.wantsAppointment && (!formData.appointmentDate || !formData.appointmentTime))}
+                >
                   {loading ? "Enviando..." : "Solicitar Orçamento Gratuito"}
                 </Button>
-                <p className="text-xs text-gray-500 mt-2 text-center">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
                   Ao enviar, você concorda com nossa política de privacidade
                 </p>
               </div>

@@ -9,6 +9,15 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from 'react';
 
 const portfolioItems = [
   {
@@ -113,6 +122,9 @@ const Portfolio = () => {
   const [selectedItem, setSelectedItem] = useState<typeof portfolioItems[0] | null>(null);
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const autoplayRef = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
 
   const handleOpenModal = (item: typeof portfolioItems[0]) => {
     setSelectedItem(item);
@@ -142,54 +154,70 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" className="py-16 bg-gray-50">
+    <section id="portfolio" className="py-16 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="section-title">Nosso Portfólio</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title dark:text-white">Nosso Portfólio</h2>
+          <p className="section-subtitle dark:text-gray-300">
             Conheça alguns dos projetos que desenvolvemos para diferentes segmentos
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {portfolioItems.map((item) => (
-            <div 
-              key={item.id} 
-              className="rounded-lg overflow-hidden shadow-md bg-white cursor-pointer card-hover"
-              onClick={() => handleOpenModal(item)}
-            >
-              <div className="h-48 overflow-hidden">
-                <img 
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-4">
-                <span className="inline-block bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded mb-2">
-                  {item.nicho}
-                </span>
-                <h3 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
-              </div>
+        <div className="mb-10">
+          <Carousel
+            className="w-full"
+            plugins={[autoplayRef.current]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {portfolioItems.map((item) => (
+                <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-4">
+                  <div 
+                    className="rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-800 cursor-pointer card-hover h-full"
+                    onClick={() => handleOpenModal(item)}
+                  >
+                    <div className="h-48 overflow-hidden">
+                      <img 
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <span className="inline-block bg-primary-100 dark:bg-blue-900 text-primary-800 dark:text-blue-200 text-xs font-medium px-2.5 py-0.5 rounded mb-2">
+                        {item.nicho}
+                      </span>
+                      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">{item.title}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{item.description}</p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-4 gap-3">
+              <CarouselPrevious className="static transform-none" />
+              <CarouselNext className="static transform-none" />
             </div>
-          ))}
+          </Carousel>
         </div>
 
         <div className="text-center mt-10">
-          <Button className="btn-primary">Ver todos os projetos</Button>
+          <Button className="btn-primary dark:bg-blue-700 dark:hover:bg-blue-800">Ver todos os projetos</Button>
         </div>
 
         {/* Modal para detalhes do projeto */}
         <Dialog open={open} onOpenChange={handleCloseModal}>
-          <DialogContent className="sm:max-w-4xl overflow-y-auto max-h-[90vh]">
+          <DialogContent className="sm:max-w-4xl overflow-y-auto max-h-[90vh] dark:bg-gray-800 dark:text-gray-100">
             {selectedItem && (
               <>
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold">{selectedItem.title}</DialogTitle>
+                  <DialogTitle className="text-2xl font-bold dark:text-white">{selectedItem.title}</DialogTitle>
                   <DialogDescription>
-                    <span className="inline-block bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded mt-2">
+                    <span className="inline-block bg-primary-100 dark:bg-blue-900 text-primary-800 dark:text-blue-200 text-xs font-medium px-2.5 py-0.5 rounded mt-2">
                       {selectedItem.nicho}
                     </span>
                   </DialogDescription>
@@ -207,14 +235,14 @@ const Portfolio = () => {
                       <>
                         <button 
                           onClick={(e) => { e.stopPropagation(); prevImage(); }} 
-                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2"
+                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 rounded-full p-2"
                           aria-label="Imagem anterior"
                         >
                           ◀
                         </button>
                         <button 
                           onClick={(e) => { e.stopPropagation(); nextImage(); }} 
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2"
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 rounded-full p-2"
                           aria-label="Próxima imagem"
                         >
                           ▶
@@ -229,7 +257,7 @@ const Portfolio = () => {
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
                         className={`w-3 h-3 mx-1 rounded-full ${
-                          currentImageIndex === index ? "bg-primary-800" : "bg-gray-300"
+                          currentImageIndex === index ? "bg-primary-800 dark:bg-blue-500" : "bg-gray-300 dark:bg-gray-600"
                         }`}
                         aria-label={`Ver imagem ${index + 1}`}
                       ></button>
@@ -238,24 +266,24 @@ const Portfolio = () => {
                 </div>
                 
                 <div className="mt-6">
-                  <h3 className="text-lg font-medium mb-2">Descrição</h3>
-                  <p className="text-gray-700">{selectedItem.description}</p>
+                  <h3 className="text-lg font-medium mb-2 dark:text-white">Descrição</h3>
+                  <p className="text-gray-700 dark:text-gray-300">{selectedItem.description}</p>
                 </div>
 
                 <div className="mt-4">
-                  <h3 className="text-lg font-medium mb-2">Funcionalidades</h3>
+                  <h3 className="text-lg font-medium mb-2 dark:text-white">Funcionalidades</h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {selectedItem.features.map((feature, index) => (
                       <li key={index} className="flex items-center">
-                        <span className="w-2 h-2 bg-accent-orange rounded-full mr-2"></span>
-                        {feature}
+                        <span className="w-2 h-2 bg-accent-orange dark:bg-orange-500 rounded-full mr-2"></span>
+                        <span className="dark:text-gray-300">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 <div className="mt-6 flex justify-end">
-                  <Button className="btn-accent">
+                  <Button className="btn-accent dark:bg-orange-600 dark:hover:bg-orange-700">
                     Quero um projeto similar
                   </Button>
                 </div>
