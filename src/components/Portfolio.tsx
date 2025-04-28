@@ -122,14 +122,15 @@ const Portfolio = () => {
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Update autoplay configuration to make it continuous without pauses
+  // Enhanced autoplay configuration for continuous motion
   const autoplayRef = useRef(
     Autoplay({ 
-      delay: 2000,
+      delay: 0, // No delay between slides
       stopOnInteraction: false,
-      stopOnMouseEnter: false, // Don't stop on mouse enter
-      stopOnFocusIn: false, // Don't stop on focus
-      playOnInit: true // Start playing immediately
+      stopOnMouseEnter: false,
+      stopOnFocusIn: false,
+      playOnInit: true,
+      speed: 0.01, // Very slow speed for smooth continuous movement
     })
   );
 
@@ -177,7 +178,9 @@ const Portfolio = () => {
             opts={{
               align: "start",
               loop: true,
-              dragFree: true // Enable free-dragging for smoother experience
+              dragFree: true,
+              skipSnaps: true,
+              containScroll: false,
             }}
           >
             <CarouselContent>
