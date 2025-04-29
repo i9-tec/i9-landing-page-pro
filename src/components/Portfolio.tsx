@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { 
   Dialog, 
@@ -122,15 +121,13 @@ const Portfolio = () => {
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Enhanced autoplay configuration for continuous motion
   const autoplayRef = useRef(
     Autoplay({ 
-      delay: 0, // No delay between slides
+      delay: 2000,
       stopOnInteraction: false,
       stopOnMouseEnter: false,
       stopOnFocusIn: false,
       playOnInit: true,
-      speed: 0.01, // Very slow speed for smooth continuous movement
     })
   );
 
@@ -220,7 +217,6 @@ const Portfolio = () => {
           <Button className="btn-primary dark:bg-blue-700 dark:hover:bg-blue-800">Ver todos os projetos</Button>
         </div>
 
-        {/* Modal para detalhes do projeto */}
         <Dialog open={open} onOpenChange={handleCloseModal}>
           <DialogContent className="sm:max-w-4xl overflow-y-auto max-h-[90vh] dark:bg-gray-800 dark:text-gray-100">
             {selectedItem && (

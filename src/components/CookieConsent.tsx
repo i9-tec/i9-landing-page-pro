@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogD
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { type CheckedState } from "@radix-ui/react-checkbox";
 
 const CookieConsent = () => {
   const [open, setOpen] = useState(false);
@@ -44,6 +45,15 @@ const CookieConsent = () => {
   // Essential cookies cannot be unchecked
   const handleEssentialChange = () => {
     setEssentialChecked(true);
+  };
+
+  // Fixed type issues by using proper handlers for checkbox changes
+  const handleAnalyticsChange = (checked: CheckedState) => {
+    setAnalyticsChecked(checked === true);
+  };
+
+  const handleMarketingChange = (checked: CheckedState) => {
+    setMarketingChecked(checked === true);
   };
 
   return (
@@ -87,7 +97,7 @@ const CookieConsent = () => {
             <Checkbox 
               id="analytics" 
               checked={analyticsChecked} 
-              onCheckedChange={setAnalyticsChecked}
+              onCheckedChange={handleAnalyticsChange}
             />
             <div>
               <Label 
@@ -106,7 +116,7 @@ const CookieConsent = () => {
             <Checkbox 
               id="marketing" 
               checked={marketingChecked} 
-              onCheckedChange={setMarketingChecked}
+              onCheckedChange={handleMarketingChange}
             />
             <div>
               <Label 
