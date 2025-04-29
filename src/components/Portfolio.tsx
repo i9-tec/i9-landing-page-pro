@@ -122,15 +122,15 @@ const Portfolio = () => {
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Configure autoplay for continuous slow movement
+  // Configure autoplay for continuous ultra-slow movement
   const autoplayRef = useRef(
     Autoplay({ 
       delay: 0, // No delay between slides for continuous movement
-      stopOnInteraction: false,
-      stopOnMouseEnter: false,
-      stopOnFocusIn: false,
-      playOnInit: true,
-      jump: false, // Prevent jumping to the start when reaching the end
+      stopOnInteraction: false, // Don't stop on interaction
+      stopOnMouseEnter: false, // Don't stop on mouse enter
+      stopOnFocusIn: false, // Don't stop on focus
+      playOnInit: true, // Start playing immediately
+      jump: false, // Don't jump to the start when reaching the end
       rootNode: (emblaRoot) => emblaRoot.parentElement,
     })
   );
@@ -183,7 +183,7 @@ const Portfolio = () => {
               skipSnaps: false,
               containScroll: false,
               slidesToScroll: 1,
-              duration: 50, // Very slow transition for smooth continuous movement
+              duration: 100000, // Very slow transition for smoother movement (100 seconds)
             }}
           >
             <CarouselContent>
