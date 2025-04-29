@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { 
   Dialog, 
@@ -121,13 +122,16 @@ const Portfolio = () => {
   const [open, setOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
+  // Configure autoplay for continuous slow movement
   const autoplayRef = useRef(
     Autoplay({ 
-      delay: 2000,
+      delay: 0, // No delay between slides for continuous movement
       stopOnInteraction: false,
       stopOnMouseEnter: false,
       stopOnFocusIn: false,
       playOnInit: true,
+      jump: false, // Prevent jumping to the start when reaching the end
+      rootNode: (emblaRoot) => emblaRoot.parentElement,
     })
   );
 
@@ -175,9 +179,11 @@ const Portfolio = () => {
             opts={{
               align: "start",
               loop: true,
-              dragFree: true,
-              skipSnaps: true,
+              dragFree: false,
+              skipSnaps: false,
               containScroll: false,
+              slidesToScroll: 1,
+              duration: 50, // Very slow transition for smooth continuous movement
             }}
           >
             <CarouselContent>
