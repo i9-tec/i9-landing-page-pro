@@ -1,6 +1,5 @@
 
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -37,6 +36,36 @@ const Index = () => {
 
   // Adicionando Schema.org para SEO estruturado
   useEffect(() => {
+    // Add title
+    document.title = "i9 Sites & Landing Pages | Criação de Sites Profissionais";
+    
+    // Add meta tags
+    const metaTags = [
+      { name: "description", content: "Desenvolvimento de sites e landing pages de alta performance para diversos segmentos como saúde, jurídico, imobiliário, educação e mais. Foco em conversão e resultados." },
+      { name: "keywords", content: "sites, landing pages, desenvolvimento web, site para consultório, site para advogados, site para imobiliária" },
+      { property: "og:title", content: "i9 Sites & Landing Pages | Criação de Sites Profissionais" },
+      { property: "og:description", content: "Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://www.i9sites.com.br" },
+      { property: "og:image", content: "https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "i9 Sites & Landing Pages | Criação de Sites Profissionais" },
+      { name: "twitter:description", content: "Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." },
+      { name: "twitter:image", content: "https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" }
+    ];
+    
+    metaTags.forEach(tag => {
+      let meta = document.querySelector(`meta[${tag.name ? 'name' : 'property'}="${tag.name || tag.property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (tag.name) meta.setAttribute('name', tag.name);
+        if (tag.property) meta.setAttribute('property', tag.property);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', tag.content);
+    });
+
+    // Add schema.org script
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.innerHTML = JSON.stringify({
@@ -66,30 +95,24 @@ const Index = () => {
       'openingHours': 'Mo,Tu,We,Th,Fr 08:00-18:00',
       'priceRange': '$$'
     });
+    
+    // Remove any existing schema script
+    const existingScript = document.querySelector('script[type="application/ld+json"]');
+    if (existingScript) {
+      document.head.removeChild(existingScript);
+    }
+    
     document.head.appendChild(script);
     
     return () => {
-      document.head.removeChild(script);
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
     };
   }, []);
 
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <meta name="description" content="Desenvolvimento de sites e landing pages de alta performance para diversos segmentos como saúde, jurídico, imobiliário, educação e mais. Foco em conversão e resultados." />
-        <meta name="keywords" content="sites, landing pages, desenvolvimento web, site para consultório, site para advogados, site para imobiliária" />
-        <meta property="og:title" content="i9 Sites & Landing Pages | Criação de Sites Profissionais" />
-        <meta property="og:description" content="Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.i9sites.com.br" />
-        <meta property="og:image" content="https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="i9 Sites & Landing Pages | Criação de Sites Profissionais" />
-        <meta name="twitter:description" content="Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." />
-        <meta name="twitter:image" content="https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" />
-        <title>i9 Sites & Landing Pages | Criação de Sites Profissionais</title>
-      </Helmet>
-
       <Header />
       <main>
         <Hero />
