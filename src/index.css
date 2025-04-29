@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -100,34 +101,36 @@
     @apply font-heading font-semibold;
   }
   
-  /* Improved form input visibility */
+  /* Improved form input visibility - fixed for both light and dark modes */
   input, textarea, select {
     @apply bg-background text-foreground border border-gray-300 dark:border-gray-600;
+    background-color: #fff !important;
+    color: #1f2937 !important;
   }
   
-  /* Improved form input background for better contrast */
-  input[type="text"], 
-  input[type="email"], 
-  input[type="tel"], 
-  input[type="number"],
-  input[type="date"],
-  input[type="time"],
-  textarea, 
-  select {
-    background-color: #fff;
-    color: #1f2937;
-  }
-  
-  .dark input[type="text"],
-  .dark input[type="email"],
-  .dark input[type="tel"],
-  .dark input[type="number"],
-  .dark input[type="date"],
-  .dark input[type="time"],
-  .dark textarea,
+  .dark input, 
+  .dark textarea, 
   .dark select {
-    background-color: #1f2937;
-    color: #fff;
+    background-color: #1f2937 !important;
+    color: #fff !important;
+  }
+  
+  /* Fix for date/time inputs and other form fields */
+  input[type="date"], 
+  input[type="time"],
+  select.form-control,
+  select.form-select {
+    @apply appearance-none;
+    background-color: #fff !important;
+    color: #1f2937 !important;
+  }
+  
+  .dark input[type="date"], 
+  .dark input[type="time"],
+  .dark select.form-control,
+  .dark select.form-select {
+    background-color: #1f2937 !important;
+    color: #fff !important;
   }
   
   /* Better placeholders */
@@ -158,41 +161,41 @@
   
   /* Fix for dropdown content in light mode */
   [data-radix-popper-content-wrapper] > div {
-    background-color: #fff;
-    color: #1f2937;
+    background-color: #fff !important;
+    color: #1f2937 !important;
     border-color: #e5e7eb;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
   
   /* Fix for dropdown content in dark mode */
   .dark [data-radix-popper-content-wrapper] > div {
-    background-color: #1f2937;
-    color: #fff;
+    background-color: #1f2937 !important;
+    color: #fff !important;
     border-color: #374151;
   }
   
   /* Fix for dropdown menu items in light mode */
   [role="menuitem"],
   [role="option"] {
-    color: #1f2937;
-    background-color: #fff;
+    color: #1f2937 !important;
+    background-color: #fff !important;
   }
   
   [role="menuitem"]:hover,
   [role="option"]:hover {
-    background-color: #f3f4f6;
+    background-color: #f3f4f6 !important;
   }
   
   /* Fix for dropdown menu items in dark mode */
   .dark [role="menuitem"],
   .dark [role="option"] {
-    color: #fff;
-    background-color: #1f2937;
+    color: #fff !important;
+    background-color: #1f2937 !important;
   }
   
   .dark [role="menuitem"]:hover,
   .dark [role="option"]:hover {
-    background-color: #374151;
+    background-color: #374151 !important;
   }
   
   /* Fix select content in light mode */
@@ -309,6 +312,35 @@
   .dark .select-content [role="option"] {
     color: #f9fafb !important;
   }
+
+  /* Fix for Dialog content in dark mode */
+  .dark .bg-white, 
+  .dark [role="dialog"] {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+  }
+
+  /* Fix for dark mode cards and bg sections */
+  .dark .bg-gray-50 {
+    background-color: #111827 !important;
+  }
+  
+  .dark .bg-white {
+    background-color: #1f2937 !important;
+  }
+  
+  /* Fix for form fields that may disappear in light mode */
+  .form-control, .form-select, .form-input, .form-textarea {
+    background-color: white !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+  }
+  
+  .dark .form-control, .dark .form-select, .dark .form-input, .dark .form-textarea {
+    background-color: #1f2937 !important;
+    color: white !important;
+    border: 1px solid #4b5563 !important;
+  }
 }
 
 @layer components {
@@ -370,3 +402,4 @@
     @apply fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full shadow-lg z-50 flex items-center justify-center transition-all duration-300 hover:scale-110;
   }
 }
+

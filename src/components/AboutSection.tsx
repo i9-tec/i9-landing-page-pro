@@ -79,6 +79,160 @@ const methodologyData = {
         "Otimização baseada em dados comportamentais",
         "Atualizações periódicas baseadas em resultados e novas tendências"
       ]
+    },
+    {
+      title: "7. Treinamento de Equipe",
+      description: "Oferecemos sessões personalizadas para sua equipe sobre como gerenciar e atualizar o site, fornecemos documentação detalhada e recursos educativos específicos para as necessidades do seu negócio.",
+      details: [
+        "Sessões de treinamento personalizadas para sua equipe",
+        "Documentação detalhada com tutoriais e manuais",
+        "Recursos educativos específicos para seu negócio",
+        "Período de acompanhamento para esclarecer dúvidas",
+        "Avaliações práticas para garantir a capacitação plena da equipe"
+      ]
+    },
+    {
+      title: "8. Análise de Resultados",
+      description: "Implementamos monitoramento contínuo de KPIs, preparamos relatórios detalhados sobre tráfego, taxas de conversão e comportamento do usuário para avaliar o desempenho do site.",
+      details: [
+        "Monitoramento contínuo de KPIs definidos na fase inicial",
+        "Relatórios detalhados sobre métricas de desempenho",
+        "Análise comparativa entre resultados e metas estabelecidas",
+        "Identificação de oportunidades de melhoria baseadas em dados",
+        "Recomendações estratégicas para otimizações futuras"
+      ]
+    },
+    {
+      title: "9. Suporte e Manutenção",
+      description: "Oferecemos pacotes de suporte técnico com diferentes níveis de SLA, realizamos atualizações regulares de segurança e monitoramos proativamente a performance e disponibilidade do site.",
+      details: [
+        "Pacotes de suporte técnico com diferentes níveis de SLA",
+        "Atualizações regulares de segurança e correções",
+        "Melhorias incrementais baseadas em feedback dos usuários",
+        "Monitoramento proativo de performance e disponibilidade",
+        "Revisões periódicas para identificar oportunidades de otimização"
+      ]
+    },
+    {
+      title: "10. Estratégia de Marketing Digital",
+      description: "Desenvolvemos um plano abrangente de marketing digital complementar ao seu site, implementamos estratégias de SEO avançadas e criamos campanhas para amplificar o alcance.",
+      details: [
+        "Desenvolvimento de plano abrangente de marketing digital",
+        "Estratégias de SEO avançadas para posicionamento orgânico",
+        "Campanhas de mídia paga para amplificação de alcance",
+        "Estratégias de nurturing e automação de marketing",
+        "Calendário editorial para blog e redes sociais"
+      ]
+    },
+    {
+      title: "11. Análise de Concorrência",
+      description: "Realizamos um mapeamento completo dos principais concorrentes no seu segmento, identificando pontos fortes, fracos e oportunidades de diferenciação para seu negócio.",
+      details: [
+        "Mapeamento completo dos principais concorrentes",
+        "Análise de estratégias de conteúdo, design e UX/UI",
+        "Avaliação de palavras-chave e posicionamento de mercado",
+        "Análise de autoridade de domínio e backlinks",
+        "Identificação de lacunas no mercado e oportunidades"
+      ]
+    },
+    {
+      title: "12. Wireframing Avançado",
+      description: "Criamos esquemas estruturais de todas as páginas importantes do seu site, focando na hierarquia de informações, fluxos de navegação e pontos de conversão para uma experiência otimizada.",
+      details: [
+        "Esquemas estruturais de todas as páginas importantes",
+        "Foco em hierarquia de informações e fluxos de navegação",
+        "Desenvolvimento de wireframes em diferentes níveis de fidelidade",
+        "Uso de ferramentas especializadas para protótipos interativos",
+        "Validação contínua com stakeholders do projeto"
+      ]
+    },
+    {
+      title: "13. Otimização de Conversão",
+      description: "Implementamos um processo sistemático para aumentar a taxa de conversão do site, utilizando técnicas de CRO como testes A/B, mapas de calor e análise de funil para identificar pontos de melhoria.",
+      details: [
+        "Implementação de técnicas avançadas de CRO",
+        "Realização de testes A/B e mapas de calor",
+        "Análise detalhada de funil de conversão",
+        "Otimização de elementos críticos como CTAs e formulários",
+        "Implementação de gatilhos de persuasão e microcopy estratégico"
+      ]
+    },
+    {
+      title: "14. Arquitetura de Informação",
+      description: "Criamos a estrutura organizacional e navegacional do site para garantir que os usuários encontrem facilmente o que procuram, com taxonomias claras e hierarquias lógicas de conteúdo.",
+      details: [
+        "Estrutura organizacional e navegacional otimizada",
+        "Taxonomias claras e hierarquias lógicas de conteúdo",
+        "Mapeamento da jornada do usuário e fluxos de navegação",
+        "Técnicas de card sorting e tree testing",
+        "Foco na redução da carga cognitiva para melhor usabilidade"
+      ]
+    },
+    {
+      title: "15. Governança de Conteúdo",
+      description: "Implementamos um sistema estruturado para gerenciar o ciclo de vida completo do conteúdo do seu site, com papéis e responsabilidades claros para criação, aprovação e manutenção.",
+      details: [
+        "Sistema estruturado para gestão de conteúdo",
+        "Definição de papéis e responsabilidades claros",
+        "Diretrizes editoriais e padrões de qualidade",
+        "Calendários editoriais estratégicos",
+        "Métricas de performance por tipo de conteúdo"
+      ]
+    },
+    {
+      title: "16. Integração com Plataformas de Marketing",
+      description: "Implementamos integrações avançadas com as principais plataformas de marketing digital para maximizar o retorno sobre investimento das suas campanhas.",
+      details: [
+        "Integração com Google Analytics e Tag Manager",
+        "Configuração de pixel do Facebook e LinkedIn Insight Tag",
+        "Implementação de ferramentas de automação de marketing",
+        "Configuração de eventos para remarketing e conversões",
+        "Dashboards personalizados para acompanhamento de resultados"
+      ]
+    },
+    {
+      title: "17. Desenvolvimento de Conteúdo Estratégico",
+      description: "Criamos conteúdo persuasivo e otimizado tanto para visitantes quanto para algoritmos de busca, aumentando a relevância do seu site.",
+      details: [
+        "Copywriting persuasivo orientado à conversão",
+        "Criação de conteúdo baseado em pesquisa de palavras-chave",
+        "Desenvolvimento de materiais ricos para captação de leads",
+        "Conteúdo educativo para diferentes etapas do funil",
+        "Otimização de conteúdo para perguntas frequentes dos usuários"
+      ]
+    },
+    {
+      title: "18. Validação Técnica Avançada",
+      description: "Realizamos testes técnicos rigorosos para garantir que seu site funcione perfeitamente em todas as condições possíveis.",
+      details: [
+        "Testes de carga para avaliar desempenho sob tráfego intenso",
+        "Validação de compatibilidade cross-browser e cross-device",
+        "Avaliação de acessibilidade conforme diretrizes WCAG",
+        "Testes de segurança e penetração",
+        "Otimização de fluxos de preenchimento de formulários"
+      ]
+    },
+    {
+      title: "19. Automatização de Processos",
+      description: "Implementamos soluções automatizadas para reduzir trabalho manual e aumentar a eficiência operacional do seu negócio.",
+      details: [
+        "Automação de respostas a formulários e leads gerados",
+        "Integração com CRM e ferramentas de gestão",
+        "Configuração de notificações e alertas customizados",
+        "Automação de relatórios de performance",
+        "Fluxos de trabalho otimizados para gestão de conteúdo"
+      ]
+    },
+    {
+      title: "20. Análise Avançada de Dados",
+      description: "Utilizamos técnicas sofisticadas de análise de dados para extrair insights valiosos sobre o comportamento dos visitantes e oportunidades de melhoria.",
+      details: [
+        "Implementação de análise avançada de funil de conversão",
+        "Segmentação detalhada de usuários por comportamento",
+        "Modelagem de atribuição para identificar canais mais eficientes",
+        "Análise preditiva para identificar tendências",
+        "Benchmarking contínuo contra métricas do setor"
+      ]
     }
   ]
 };

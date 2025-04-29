@@ -48,6 +48,13 @@ export function ThemeProvider({
     }
 
     root.classList.add(theme);
+    
+    // Force re-render form fields in case they were affected by theme change
+    const formFields = document.querySelectorAll('input, select, textarea');
+    formFields.forEach(field => {
+      field.classList.remove('theme-refresh');
+      setTimeout(() => field.classList.add('theme-refresh'), 10);
+    });
   }, [theme]);
 
   const value = {
