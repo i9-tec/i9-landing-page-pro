@@ -10,6 +10,7 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ServicesSection from '@/components/ServicesSection';
 import MethodologySection from '@/components/MethodologySection';
+import { Helmet } from 'react-helmet';
 
 const Index = () => {
   // Função para revelar elementos conforme o scroll
@@ -74,8 +75,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Meta tags para SEO */}
-      <div className="hidden">
+      <Helmet>
         <meta name="description" content="Desenvolvimento de sites e landing pages de alta performance para diversos segmentos como saúde, jurídico, imobiliário, educação e mais. Foco em conversão e resultados." />
         <meta name="keywords" content="sites, landing pages, desenvolvimento web, site para consultório, site para advogados, site para imobiliária" />
         <meta property="og:title" content="i9 Sites & Landing Pages | Criação de Sites Profissionais" />
@@ -87,7 +87,7 @@ const Index = () => {
         <meta name="twitter:title" content="i9 Sites & Landing Pages | Criação de Sites Profissionais" />
         <meta name="twitter:description" content="Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." />
         <meta name="twitter:image" content="https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" />
-      </div>
+      </Helmet>
 
       <Header />
       <main>
