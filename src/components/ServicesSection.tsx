@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -346,6 +346,51 @@ const services: Service[] = [
 
 const ServicesSection = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  
+  useEffect(() => {
+    // Configuração do carrossel automático
+    const scrollSpeed = 0.3; // pixels por frame - velocidade muito baixa
+    let animationFrameId: number;
+    let lastTimestamp: number;
+    
+    const animate = (timestamp: number) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const elapsed = timestamp - lastTimestamp;
+      
+      if (carouselRef.current) {
+        // Calcula o deslocamento com base no tempo decorrido para movimento suave
+        const scrollAmount = (elapsed * scrollSpeed) / 1000;
+        setCurrentPosition(prev => {
+          const nextPosition = prev + scrollAmount;
+          
+          // Se chegamos ao fim, reiniciamos do começo
+          const maxScroll = carouselRef.current ? carouselRef.current.scrollWidth - carouselRef.current.clientWidth : 0;
+          if (nextPosition > maxScroll) {
+            return 0; // Volta ao início suavemente
+          }
+          
+          return nextPosition;
+        });
+        
+        if (carouselRef.current) {
+          carouselRef.current.scrollLeft = currentPosition;
+        }
+      }
+      
+      lastTimestamp = timestamp;
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [currentPosition]);
 
   return (
     <section id="servicos" className="py-20 bg-gray-50 dark:bg-gray-900">
@@ -355,11 +400,16 @@ const ServicesSection = () => {
           Soluções completas para estabelecer sua presença digital com foco em resultados
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {services.map((service) => (
-            <Dialog key={service.id}>
+        <div 
+          ref={carouselRef}
+          className="flex overflow-hidden mt-12 py-4 px-2"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {/* Duplicamos os serviços para criar um loop contínuo */}
+          {[...services, ...services].map((service, index) => (
+            <Dialog key={`${service.id}-${index}`}>
               <DialogTrigger asChild>
-                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col">
+                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col min-w-[300px] mx-2 flex-shrink-0">
                   <CardHeader>
                     <div className="text-center">
                       {service.icon}

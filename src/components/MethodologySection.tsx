@@ -88,6 +88,41 @@ const methodologySteps: MethodologyStep[] = [
     shortDescription: "Ampliação da visibilidade e geração de leads",
     fullDescription: "Na etapa de Estratégia de Marketing Digital, desenvolvemos um plano abrangente de marketing digital complementar ao seu site, implementamos estratégias de SEO avançadas para melhorar o posicionamento orgânico, criamos campanhas de mídia paga (Google Ads, redes sociais) para amplificar o alcance. Estabelecemos estratégias de nurturing e automação de marketing para converter visitantes em leads e clientes, e desenvolvemos um calendário editorial para blog e redes sociais alinhado aos objetivos de negócio. Esta fase potencializa o investimento feito no site, transformando-o em um verdadeiro gerador de oportunidades de negócio através de estratégias integradas de atração, conversão e fidelização.",
     icon: "📣"
+  },
+  {
+    id: 11,
+    title: "Análise de Concorrência",
+    shortDescription: "Estudo detalhado do cenário competitivo",
+    fullDescription: "Durante a Análise de Concorrência, realizamos um mapeamento completo dos principais concorrentes no seu segmento, identificando seus pontos fortes, fracos e oportunidades de diferenciação. Analisamos estratégias de conteúdo, design, UX/UI, palavras-chave e posicionamento de mercado destes competidores. Avaliamos métricas como autoridade de domínio, backlinks, tempo de permanência e taxa de conversão quando possível. O objetivo é identificar lacunas no mercado e oportunidades de inovação para seu projeto digital, garantindo que sua presença online se destaque da concorrência com diferenciais competitivos claros e relevantes.",
+    icon: "🔎"
+  },
+  {
+    id: 12,
+    title: "Wireframing Avançado",
+    shortDescription: "Estruturação detalhada da experiência do usuário",
+    fullDescription: "No processo de Wireframing Avançado, criamos esquemas estruturais de todas as páginas importantes do seu site, focando na hierarquia de informações, fluxos de navegação e pontos de conversão. Desenvolvemos wireframes de baixa, média e alta fidelidade para diferentes estágios do projeto, sempre validando com stakeholders. Utilizamos ferramentas especializadas como Figma, Adobe XD ou Sketch para protótipos interativos que simulam a experiência real do usuário. Esta metodologia permite visualizar e testar a usabilidade do site antes do desenvolvimento, economizando recursos e garantindo que a estrutura atenda perfeitamente aos objetivos estratégicos e necessidades dos usuários.",
+    icon: "📐"
+  },
+  {
+    id: 13,
+    title: "Otimização de Conversão",
+    shortDescription: "Maximização da taxa de conversão do site",
+    fullDescription: "Na fase de Otimização de Conversão, implementamos um processo sistemático para aumentar o percentual de visitantes que realizam ações desejadas no site. Utilizamos técnicas de CRO (Conversion Rate Optimization) como testes A/B, mapas de calor, gravações de sessão e análise de funil para identificar pontos de fricção na jornada do usuário. Otimizamos elementos críticos como chamadas para ação, formulários, páginas de destino e checkout com base em dados comportamentais reais. Implementamos gatilhos de persuasão e microcopy estratégico para superar objeções e facilitar a tomada de decisão. Esta abordagem científica e orientada a dados resulta em melhorias contínuas nas taxas de conversão e ROI do seu investimento digital.",
+    icon: "📈"
+  },
+  {
+    id: 14,
+    title: "Arquitetura de Informação",
+    shortDescription: "Estruturação estratégica dos conteúdos e dados",
+    fullDescription: "Na etapa de Arquitetura de Informação, criamos a estrutura organizacional e navegacional do seu site para garantir que os usuários encontrem facilmente o que procuram. Desenvolvemos taxonomias claras, categorizações lógicas e hierarquias de conteúdo que facilitam a descoberta de informações. Mapeamos a jornada do usuário e os principais fluxos de navegação para otimizar a experiência em cada ponto de contato. Utilizamos técnicas como card sorting e tree testing para validar a organização do conteúdo com usuários reais. Esta metodologia estabelece os alicerces para uma experiência de usuário fluida e intuitiva, reduzindo a carga cognitiva e aumentando os índices de satisfação e engajamento.",
+    icon: "🏗️"
+  },
+  {
+    id: 15,
+    title: "Governança de Conteúdo",
+    shortDescription: "Gestão estratégica e sustentável de conteúdos",
+    fullDescription: "Na fase de Governança de Conteúdo, implementamos um sistema estruturado para gerenciar o ciclo de vida completo do conteúdo do seu site. Definimos papéis e responsabilidades claros para criação, aprovação, publicação e manutenção de conteúdos. Estabelecemos diretrizes editoriais, padrões de qualidade e processos de workflow eficientes para garantir consistência e relevância em todas as comunicações digitais. Criamos calendários editoriais estratégicos alinhados com objetivos de negócio e datas sazonais importantes para seu segmento. Implementamos métricas de performance por tipo de conteúdo para otimização contínua da estratégia. Esta estrutura de governança assegura que seu conteúdo digital permaneça atualizado, relevante e alinhado aos objetivos estratégicos a longo prazo.",
+    icon: "📝"
   }
 ];
 
