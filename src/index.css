@@ -133,27 +133,74 @@
     @apply bg-white text-gray-800 dark:bg-gray-800 dark:text-white;
   }
   
-  /* Fix dropdown menu visibility in dark mode */
+  /* Fix dropdown menu visibility in light and dark mode */
   [data-radix-popper-content-wrapper] {
     @apply bg-transparent;
   }
   
+  /* Fix for dropdown content in light mode */
+  [data-radix-popper-content-wrapper] > div {
+    @apply bg-white text-gray-800 border-gray-200 shadow-md;
+  }
+  
+  /* Fix for dropdown content in dark mode */
   .dark [data-radix-popper-content-wrapper] > div {
     @apply bg-gray-800 text-white border-gray-700;
   }
   
-  /* Dropdown menu items in dark mode */
-  .dark [role="menuitem"] {
+  /* Fix for dropdown menu items in light mode */
+  [role="menuitem"],
+  [role="option"] {
+    @apply text-gray-800 hover:bg-gray-100;
+  }
+  
+  /* Fix for dropdown menu items in dark mode */
+  .dark [role="menuitem"],
+  .dark [role="option"] {
     @apply text-white hover:bg-gray-700;
   }
   
-  /* Fix checkbox and radio button visibility in dark mode */
-  .dark [data-state="checked"] {
+  /* Fix select content in light mode */
+  .select-content {
+    @apply bg-white text-gray-800 !important;
+  }
+  
+  /* Fix select content in dark mode */
+  .dark .select-content {
+    @apply bg-gray-800 text-white !important;
+  }
+
+  /* Fix calendar in light mode */
+  .rdp {
+    @apply bg-white text-gray-800;
+  }
+  
+  /* Fix calendar in dark mode */
+  .dark .rdp {
+    @apply bg-gray-800 text-white;
+  }
+
+  /* Fix checkbox and radio button visibility in both modes */
+  [data-state="checked"] {
     @apply bg-blue-600 border-blue-600;
   }
   
-  .dark [data-state="unchecked"] {
+  [data-state="unchecked"] {
     @apply border-gray-500;
+  }
+  
+  /* Light mode specific improvements */
+  .bg-white {
+    @apply bg-white text-gray-800;
+  }
+
+  .bg-gray-50,
+  .bg-gray-100 {
+    @apply bg-gray-50 text-gray-800;
+  }
+
+  .bg-blue-50 {
+    @apply bg-blue-50 text-blue-800;
   }
 
   /* Dark mode specific improvements */

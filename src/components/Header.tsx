@@ -15,6 +15,23 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const headerHeight = 100; // Approximate header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -38,15 +55,23 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-8">
           <nav>
             <ul className="flex space-x-6">
-              {['Início', 'Serviços', 'Nichos', 'Portfólio', 'Sobre', 'Contato'].map((item, index) => (
-                <li key={index}>
+              {[
+                { name: 'Início', id: '' },
+                { name: 'Serviços', id: 'servicos' },
+                { name: 'Nichos', id: 'nichos' },
+                { name: 'Portfólio', id: 'portfolio' },
+                { name: 'Sobre', id: 'sobre' },
+                { name: 'Contato', id: 'contato' }
+              ].map((item) => (
+                <li key={item.name}>
                   <a 
-                    href={`#${item.toLowerCase() === 'início' ? '' : item.toLowerCase()}`} 
+                    href={`#${item.id}`} 
+                    onClick={(e) => handleScroll(e, item.id || 'home')}
                     className={`font-medium hover:text-primary-800 dark:hover:text-primary-200 transition-colors ${
                       isScrolled ? 'text-gray-700 dark:text-gray-200' : 'text-gray-800 dark:text-gray-100'
                     }`}
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -57,6 +82,7 @@ const Header = () => {
             <ThemeToggle />
             <a 
               href="#contato" 
+              onClick={(e) => handleScroll(e, 'contato')}
               className="btn-primary inline-flex items-center justify-center"
             >
               Solicitar Orçamento
@@ -81,14 +107,21 @@ const Header = () => {
       }`}>
         <nav className="container mx-auto px-4">
           <ul className="space-y-4">
-            {['Início', 'Serviços', 'Nichos', 'Portfólio', 'Sobre', 'Contato'].map((item, index) => (
-              <li key={index}>
+            {[
+              { name: 'Início', id: '' },
+              { name: 'Serviços', id: 'servicos' },
+              { name: 'Nichos', id: 'nichos' },
+              { name: 'Portfólio', id: 'portfolio' },
+              { name: 'Sobre', id: 'sobre' },
+              { name: 'Contato', id: 'contato' }
+            ].map((item) => (
+              <li key={item.name}>
                 <a 
-                  href={`#${item.toLowerCase() === 'início' ? '' : item.toLowerCase()}`} 
+                  href={`#${item.id}`} 
+                  onClick={(e) => handleScroll(e, item.id || 'home')}
                   className="block py-2 text-gray-800 dark:text-gray-100 font-medium hover:text-primary-800 dark:hover:text-primary-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item}
+                  {item.name}
                 </a>
               </li>
             ))}
@@ -96,8 +129,8 @@ const Header = () => {
               <ThemeToggle />
               <a 
                 href="#contato" 
+                onClick={(e) => handleScroll(e, 'contato')}
                 className="btn-primary inline-block w-full text-center py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Solicitar Orçamento
               </a>

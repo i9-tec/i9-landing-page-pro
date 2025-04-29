@@ -8,6 +8,8 @@ import Portfolio from '@/components/Portfolio';
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import ServicesSection from '@/components/ServicesSection';
+import MethodologySection from '@/components/MethodologySection';
 
 const Index = () => {
   // Função para revelar elementos conforme o scroll
@@ -91,8 +93,10 @@ const Index = () => {
       <main>
         <Hero />
         <FeaturesSection />
+        <MethodologySection />
         <NichosSection />
         <Portfolio />
+        <ServicesSection />
         <AboutSection />
         <ContactSection />
       </main>
