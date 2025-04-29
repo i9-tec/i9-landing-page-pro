@@ -1,5 +1,6 @@
 
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -10,7 +11,6 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ServicesSection from '@/components/ServicesSection';
 import MethodologySection from '@/components/MethodologySection';
-import { Helmet } from 'react-helmet';
 
 const Index = () => {
   // Função para revelar elementos conforme o scroll
@@ -87,6 +87,7 @@ const Index = () => {
         <meta name="twitter:title" content="i9 Sites & Landing Pages | Criação de Sites Profissionais" />
         <meta name="twitter:description" content="Sites e landing pages que convertem visitantes em clientes. Soluções digitais de alta performance para diversos segmentos." />
         <meta name="twitter:image" content="https://i9empreendendo.com/wp-content/uploads/2024/10/cropped-i9logo-2_preview_rev_1.png" />
+        <title>i9 Sites & Landing Pages | Criação de Sites Profissionais</title>
       </Helmet>
 
       <Header />
