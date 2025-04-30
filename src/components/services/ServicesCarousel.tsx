@@ -7,9 +7,10 @@ import {
 } from "@/components/ui/carousel";
 import { ServiceType } from '@/types/service';
 import ServiceCard from './ServiceCard';
+import { EmblaCarouselType } from 'embla-carousel-react';
 
 interface ServicesCarouselProps {
-  emblaRef: React.RefObject<HTMLDivElement>;
+  emblaRef: React.RefCallback<HTMLDivElement> | React.MutableRefObject<HTMLDivElement | null>;
   filteredServices: ServiceType[];
   onSelectService: (service: ServiceType) => void;
 }
