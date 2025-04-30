@@ -139,20 +139,6 @@ const ServicesSection = () => {
             </CarouselContent>
           </Carousel>
         </div>
-
-        <div className="mt-12 text-center">
-          <Button 
-            className="btn-primary dark:bg-blue-700 dark:hover:bg-blue-800"
-            onClick={() => {
-              const contactSection = document.getElementById('contato');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            Solicite um orçamento
-          </Button>
-        </div>
         
         {/* Service details modal */}
         <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
