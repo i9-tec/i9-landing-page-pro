@@ -17,6 +17,7 @@ const ServicesSection = () => {
     Autoplay({
       delay: 8000, // Longer delay for slower movement
       stopOnInteraction: false,
+      stopOnMouseEnter: true, // Pause on mouse hover
     })
   );
   

@@ -4,6 +4,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselPrevious,
+  CarouselNext
 } from "@/components/ui/carousel";
 import { ServiceType } from '@/types/service';
 import ServiceCard from './ServiceCard';
@@ -21,7 +23,7 @@ const ServicesCarousel = ({
   onSelectService 
 }: ServicesCarouselProps) => {
   return (
-    <div className="overflow-hidden w-full">
+    <div className="overflow-hidden w-full relative">
       <Carousel ref={emblaRef} className="w-full">
         <CarouselContent>
           {filteredServices.map((service, index) => (
@@ -30,6 +32,10 @@ const ServicesCarousel = ({
             </CarouselItem>
           ))}
         </CarouselContent>
+        <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between pointer-events-none">
+          <CarouselPrevious className="pointer-events-auto relative left-0 translate-x-0 opacity-80" />
+          <CarouselNext className="pointer-events-auto relative right-0 translate-x-0 opacity-80" />
+        </div>
       </Carousel>
     </div>
   );
