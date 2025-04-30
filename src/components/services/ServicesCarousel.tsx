@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { ServiceType } from '@/types/service';
 import ServiceCard from './ServiceCard';
-import { EmblaCarouselType } from 'embla-carousel-react';
+import { UseEmblaCarouselType } from 'embla-carousel-react';
 
 interface ServicesCarouselProps {
   emblaRef: React.RefCallback<HTMLDivElement> | React.MutableRefObject<HTMLDivElement | null>;
