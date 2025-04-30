@@ -11,45 +11,30 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 
 const ServicesSection = () => {
-  const autoplayOptions = {
-    delay: 4000,
-    stopOnInteraction: false,
-    rootNode: (emblaRoot: any) => emblaRoot.parentElement,
-  };
+  // Create autoplay plugin instance first
+  const autoplayPlugin = useRef(
+    Autoplay({
+      delay: 4000,
+      stopOnInteraction: false,
+    })
+  );
   
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true, 
       align: 'start',
       containScroll: 'trimSnaps',
-      draggable: false,
       speed: 10, // Lower speed for slower movement
     }, 
-    [Autoplay(autoplayOptions)]
+    [autoplayPlugin.current]
   );
-
-  // This is a safe reference to store our autoplay plugin instance
-  const autoplayRef = useRef<Autoplay>();
 
   // Configure the carousel to be continuous
   useEffect(() => {
     if (emblaApi) {
-      // Store the autoplay plugin instance when emblaApi is available
-      const autoplay = emblaApi.plugins().autoplay;
-      if (autoplay) {
-        autoplayRef.current = autoplay;
-        
-        // Start autoplay immediately and make it continuous
-        autoplay.play();
-      }
+      // Make sure we have a reference to the api
+      emblaApi.reInit();
     }
-    
-    return () => {
-      // Clean up when component unmounts
-      if (autoplayRef.current) {
-        autoplayRef.current.stop();
-      }
-    };
   }, [emblaApi]);
 
   const services = [
@@ -129,11 +114,6 @@ const ServicesSection = () => {
           <Carousel
             ref={emblaRef}
             className="w-full"
-            opts={{
-              align: "start",
-              loop: true,
-              dragFree: true
-            }}
           >
             <CarouselContent>
               {services.map((service, index) => (
