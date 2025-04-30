@@ -14,6 +14,10 @@ import { cn } from '@/lib/utils';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { getAvailableTimes, isBusinessDay } from '@/lib/date-utils';
+import { ServiceType } from '@/types/service';
+
+// Import service data from a separate file to avoid duplication
+import { services } from '@/data/services';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +34,15 @@ const ContactSection = () => {
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  // Check URL parameters for pre-selected service on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceId = urlParams.get('service');
+    if (serviceId) {
+      setFormData(prev => ({ ...prev, interest: serviceId }));
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -204,26 +217,25 @@ const ContactSection = () => {
               
               <div>
                 <label htmlFor="interest" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Área de interesse *
+                  Serviço de interesse *
                 </label>
                 <Select 
                   value={formData.interest} 
                   onValueChange={handleSelectChange}
                   required
                 >
-                  <SelectTrigger className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <SelectValue placeholder="Selecione seu segmento" />
+                  <SelectTrigger id="interest" className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <SelectValue placeholder="Selecione um serviço" />
                   </SelectTrigger>
-                  <SelectContent className="dark:bg-gray-800">
-                    <SelectItem value="saude">Saúde e Bem-estar</SelectItem>
-                    <SelectItem value="juridico">Serviços Jurídicos</SelectItem>
-                    <SelectItem value="imobiliario">Mercado Imobiliário</SelectItem>
-                    <SelectItem value="educacao">Educação e Treinamentos</SelectItem>
-                    <SelectItem value="freelancers">Profissionais Autônomos</SelectItem>
-                    <SelectItem value="comercio">Comércio e Serviços Locais</SelectItem>
-                    <SelectItem value="ecommerce">E-commerce e Negócios Digitais</SelectItem>
-                    <SelectItem value="turismo">Turismo e Hospitalidade</SelectItem>
-                    <SelectItem value="outros">Outros</SelectItem>
+                  <SelectContent className="dark:bg-gray-800 max-h-[300px]">
+                    {services.map((service) => (
+                      <SelectItem key={service.id} value={service.id}>
+                        <div className="flex items-center">
+                          <span className="mr-2">{service.icon}</span>
+                          {service.title}
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
