@@ -40,13 +40,15 @@ const ServicesSection = () => {
     }
   }, [emblaApi]);
 
-  // Filter services based on search query
+  // Filter services based on search query and sort alphabetically
   const filteredServices = searchQuery 
-    ? services.filter(service => 
-        service.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        service.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())
-      ) 
-    : services;
+    ? services
+        .filter(service => 
+          service.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          service.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .sort((a, b) => a.title.localeCompare(b.title)) 
+    : [...services].sort((a, b) => a.title.localeCompare(b.title)); // Sort alphabetically
 
   const handleScheduleConsultation = () => {
     if (selectedService) {

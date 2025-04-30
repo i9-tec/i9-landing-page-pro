@@ -24,7 +24,7 @@ const ServicesCarousel = ({
       <Carousel ref={emblaRef} className="w-full">
         <CarouselContent>
           {filteredServices.map((service, index) => (
-            <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
+            <CarouselItem key={service.id} className="md:basis-1/3 lg:basis-1/4">
               <ServiceCard service={service} onSelect={onSelectService} />
             </CarouselItem>
           ))}

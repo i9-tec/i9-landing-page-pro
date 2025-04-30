@@ -7,4 +7,6 @@ export interface ServiceType {
   fullDescription: string;
   priceRange: string;
   timeframe: string;
+  includedFeatures?: string[];
+  recommendedFor?: string[];
 }

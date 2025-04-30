@@ -42,15 +42,39 @@ const ServiceDetailsModal = ({
             {selectedService.fullDescription}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <div>
-              <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400">Faixa de Preço</h4>
-              <p className="text-lg font-medium">{selectedService.priceRange}</p>
+          <div className="mt-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div>
+                <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400">Faixa de Preço</h4>
+                <p className="text-lg font-medium">{selectedService.priceRange}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400">Prazo Aproximado</h4>
+                <p className="text-lg font-medium">{selectedService.timeframe}</p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400">Prazo Aproximado</h4>
-              <p className="text-lg font-medium">{selectedService.timeframe}</p>
-            </div>
+            
+            {selectedService.includedFeatures && (
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Recursos Inclusos</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  {selectedService.includedFeatures.map((feature, index) => (
+                    <li key={index} className="text-gray-700 dark:text-gray-300">{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {selectedService.recommendedFor && (
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Recomendado Para</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  {selectedService.recommendedFor.map((recommendation, index) => (
+                    <li key={index} className="text-gray-700 dark:text-gray-300">{recommendation}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           
           <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
