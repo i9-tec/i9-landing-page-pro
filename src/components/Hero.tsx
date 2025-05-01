@@ -27,10 +27,17 @@ const Hero = () => {
               Desenvolvemos soluções digitais de alta performance e design moderno, específicas para o seu segmento de atuação com foco em conversão e resultados.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="btn-accent" onClick={handleOrçamentoClick}>
+              <Button 
+                className="btn-accent bg-primary text-white hover:bg-primary/90 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white" 
+                onClick={handleOrçamentoClick}
+              >
                 Solicitar Orçamento
               </Button>
-              <Button variant="outline" className="btn-secondary" onClick={handlePortfolioClick}>
+              <Button 
+                variant="outline" 
+                className="btn-secondary text-gray-800 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" 
+                onClick={handlePortfolioClick}
+              >
                 Ver Portfólio
               </Button>
             </div>

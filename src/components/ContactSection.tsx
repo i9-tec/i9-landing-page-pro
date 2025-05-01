@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
-import { format, addDays, isValid } from 'date-fns';
+import { format, addDays, addMonths, isValid } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
@@ -19,12 +19,26 @@ import { ServiceType } from '@/types/service';
 // Import service data from a separate file to avoid duplication
 import { services } from '@/data/services';
 
+// Business segments/niches
+const businessCategories = [
+  { id: "health", label: "Saúde e Bem-estar" },
+  { id: "legal", label: "Jurídico" },
+  { id: "education", label: "Educação" },
+  { id: "realEstate", label: "Imobiliário" },
+  { id: "beauty", label: "Beleza e Estética" },
+  { id: "food", label: "Alimentação" },
+  { id: "ecommerce", label: "E-commerce" },
+  { id: "tech", label: "Tecnologia" },
+  { id: "other", label: "Outro" }
+];
+
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     interest: '',
+    category: '',
     message: '',
     wantsAppointment: false,
     appointmentDate: undefined as Date | undefined,
@@ -49,8 +63,8 @@ const ContactSection = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (value: string) => {
-    setFormData(prev => ({ ...prev, interest: value }));
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleTimeSelect = (time: string) => {
@@ -101,6 +115,7 @@ const ContactSection = () => {
         email: '',
         phone: '',
         interest: '',
+        category: '',
         message: '',
         wantsAppointment: false,
         appointmentDate: undefined,
@@ -221,7 +236,7 @@ const ContactSection = () => {
                 </label>
                 <Select 
                   value={formData.interest} 
-                  onValueChange={handleSelectChange}
+                  onValueChange={(value) => handleSelectChange('interest', value)}
                   required
                 >
                   <SelectTrigger id="interest" className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -234,6 +249,27 @@ const ContactSection = () => {
                           <span className="mr-2">{service.icon}</span>
                           {service.title}
                         </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Categoria de negócio (opcional)
+                </label>
+                <Select 
+                  value={formData.category} 
+                  onValueChange={(value) => handleSelectChange('category', value)}
+                >
+                  <SelectTrigger id="category" className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <SelectValue placeholder="Selecione seu segmento" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-gray-800">
+                    {businessCategories.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -287,18 +323,18 @@ const ContactSection = () => {
                           onSelect={handleDateSelect}
                           disabled={(date) => {
                             // Disable past dates, weekends, holidays and recess
-                            return !isBusinessDay(date) || date < new Date();
+                            return !isBusinessDay(date);
                           }}
                           initialFocus
                           fromDate={new Date()}
-                          toDate={addDays(new Date(), 60)}
+                          toDate={addMonths(new Date(), 12)}
                           className="pointer-events-auto"
                           locale={ptBR}
                         />
                       </PopoverContent>
                     </Popover>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Disponível de segunda a sexta, exceto feriados e recesso
+                      Disponível de segunda a sexta, exceto feriados e recesso de fim de ano (20/12 a 20/01)
                     </p>
                   </div>
                   
@@ -349,7 +385,7 @@ const ContactSection = () => {
               <div>
                 <Button 
                   type="submit" 
-                  className="w-full btn-accent py-6" 
+                  className="w-full btn-accent py-6 bg-primary text-white hover:bg-primary/90 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white" 
                   disabled={loading || (formData.wantsAppointment && (!formData.appointmentDate || !formData.appointmentTime))}
                 >
                   {loading ? "Enviando..." : "Solicitar Orçamento Gratuito"}

@@ -1,5 +1,5 @@
 
-import { isSameDay, isWithinInterval, isWeekend } from "date-fns";
+import { isSameDay, isWithinInterval, isWeekend, addMonths } from "date-fns";
 
 // Brazilian holidays
 const getBrazilianHolidays = (year: number): Date[] => {
@@ -15,11 +15,15 @@ const getBrazilianHolidays = (year: number): Date[] => {
     new Date(year, 11, 25)  // Christmas
   ];
   
-  // Year-end recess (December 23 to January 20 of the following year)
+  return fixedHolidays;
+};
+
+// Year-end recess dates (December 20 to January 20)
+const getYearEndRecessDates = (year: number): Date[] => {
   const recessDates: Date[] = [];
   
-  // December 23-31
-  for (let day = 23; day <= 31; day++) {
+  // December 20-31
+  for (let day = 20; day <= 31; day++) {
     recessDates.push(new Date(year, 11, day));
   }
   
@@ -28,14 +32,23 @@ const getBrazilianHolidays = (year: number): Date[] => {
     recessDates.push(new Date(year + 1, 0, day));
   }
   
-  return [...fixedHolidays, ...recessDates];
+  return recessDates;
 };
 
 export const isBusinessDay = (date: Date): boolean => {
   // Check if it's a weekend
   if (isWeekend(date)) return false;
   
-  // Check against holidays for the current and next year (for year-end recess)
+  // Check if it's a past date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (date < today) return false;
+  
+  // Check if it's more than 12 months in the future
+  const maxDate = addMonths(new Date(), 12);
+  if (date > maxDate) return false;
+  
+  // Check against holidays and recess for the current and relevant years
   const year = date.getFullYear();
   const holidays = [
     ...getBrazilianHolidays(year - 1), // For January recess from previous year
@@ -43,8 +56,15 @@ export const isBusinessDay = (date: Date): boolean => {
     ...getBrazilianHolidays(year + 1)  // For December recess into next year
   ];
   
-  // Check if date is a holiday
-  return !holidays.some(holiday => isSameDay(date, holiday));
+  // Check year-end recess
+  const recessDates = [
+    ...getYearEndRecessDates(year - 1), // Previous year's recess extending to current January
+    ...getYearEndRecessDates(year)      // Current year's recess extending to next January
+  ];
+  
+  // Check if date is a holiday or during recess
+  return !holidays.some(holiday => isSameDay(date, holiday)) &&
+         !recessDates.some(recess => isSameDay(date, recess));
 };
 
 export const isBusinessHour = (date: Date): boolean => {
@@ -54,11 +74,20 @@ export const isBusinessHour = (date: Date): boolean => {
 };
 
 export const isValidAppointmentTime = (date: Date): boolean => {
+  // Check if date is in the past
+  const now = new Date();
+  if (date <= now) return false;
+  
   return isBusinessDay(date) && isBusinessHour(date);
 };
 
 export const getAvailableTimes = (date: Date): string[] => {
   if (!isBusinessDay(date)) return [];
+  
+  const now = new Date();
+  const isToday = isSameDay(date, now);
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
   
   const times: string[] = [];
   
@@ -67,6 +96,11 @@ export const getAvailableTimes = (date: Date): string[] => {
     for (let minute of [0, 30]) {
       // Skip 16:30 as the last appointment would end at 17:00
       if (hour === 16 && minute === 30) continue;
+      
+      // Skip past hours on current day
+      if (isToday && (hour < currentHour || (hour === currentHour && minute <= currentMinute))) {
+        continue;
+      }
       
       const formattedHour = hour.toString().padStart(2, '0');
       const formattedMinute = minute.toString().padStart(2, '0');

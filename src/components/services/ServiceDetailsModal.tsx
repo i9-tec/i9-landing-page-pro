@@ -26,7 +26,7 @@ const ServiceDetailsModal = ({
   
   return (
     <Dialog open={!!selectedService} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg md:max-w-2xl lg:max-w-3xl w-11/12 mx-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center text-2xl">
             <span className="text-3xl mr-2">{selectedService.icon}</span> 

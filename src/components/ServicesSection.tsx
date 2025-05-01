@@ -15,7 +15,7 @@ const ServicesSection = () => {
   // Create autoplay plugin instance first
   const autoplayPlugin = useRef(
     Autoplay({
-      delay: 8000, // Longer delay for slower movement
+      delay: 5000, // 5 seconds delay for autoplay
       stopOnInteraction: false,
       stopOnMouseEnter: true, // Pause on mouse hover
     })
@@ -26,9 +26,9 @@ const ServicesSection = () => {
       loop: true, 
       align: 'start',
       containScroll: 'trimSnaps',
-      dragFree: true,     // Make scrolling smoother
-      slidesToScroll: 1,  // Scroll one slide at a time
-      duration: 100,      // Duration of the animation in milliseconds (higher = slower)
+      dragFree: true,
+      slidesToScroll: 1,
+      duration: 30,
     }, 
     [autoplayPlugin.current]
   );
